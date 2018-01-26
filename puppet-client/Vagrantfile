@@ -1,6 +1,5 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
-  config.vm.hostname = "puppet-server"
-  config.vm.network "forwarded_port", guest: 8140, host: 8140
+  config.vm.hostname = "tropic_thunder"
   config.vm.provision "shell", path: "installation.sh"
 end
