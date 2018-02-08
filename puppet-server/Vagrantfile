@@ -1,25 +1,26 @@
 Vagrant.configure("2") do |config|
   config.vm.define :master do |master_config|
+
     if Vagrant.has_plugin?("vagrant-cachier")
       config.cache.auto_detect = true
     end
+
     master_config.vm.box = "ubuntu/trusty64"
     master_config.vm.box_check_update = false
     master_config.vm.hostname = "puppet-server.bsg.com"
-    master_config.vm.network "public_network", :bridge => 'en0: Wi-Fi (AirPort)'
-    master_config.vm.provision :shell, path: "installation.sh"
 
+    master_config.vm.network "private_network", ip: "172.16.33.10"
+    master_config.vm.network "public_network", bridge: ["enp0s31f6", "en0: Wi-Fi (AirPort)"]
+    
+    master_config.vm.provision :shell, path: "installation.sh"
+    
     # Enable the Puppet provisioner
     master_config.vm.provision :puppet do |puppet|
       puppet.manifests_path = "VagrantConf/manifests"
       puppet.manifest_file  = "default.pp"
-      puppet.options        = "--verbose --modulepath /home/vagrant/modules"
     end 
 
-    # master_config.vm.synced_folder "puppet/manifests", "/etc/puppet/manifests"
-    # master_config.vm.synced_folder "puppet/modules", "/etc/puppet/modules"
-    # master_config.vm.synced_folder "puppet/hieradata", "/etc/puppet/hieradata"
-
-    # master_config.vm.synced_folder "modules", "/home/vagrant/modules", type: "nfs"
+    master_config.vm.synced_folder "modules", "/home/vagrant/modules", type: "nfs"
+    master_config.vm.synced_folder "manifests", "/home/vagrant/.puppet/manifests", type: "nfs"
   end
 end

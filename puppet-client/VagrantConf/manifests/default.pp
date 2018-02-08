@@ -17,9 +17,4 @@ node default {
     source => "/vagrant/VagrantConf/puppet/puppet.conf",
     require => File['/home/vagrant/.puppet']
   }
-    
-  file {'/home/vagrant/.puppet/autosign.conf':
-    ensure => link,
-    source => "/vagrant/VagrantConf/puppet/autosign.conf",
-  }
 }

@@ -15,13 +15,13 @@ fi
 # Install the PuppetLabs repo
 echo "Configuring PuppetLabs repo..."
 repo_deb_path=$(mktemp)
-wget --output-document=${repo_deb_path} ${REPO_DEB_URL} 2>/dev/null
-dpkg -i ${repo_deb_path} >/dev/null
-apt-get update >/dev/null
+wget --output-document=${repo_deb_path} ${REPO_DEB_URL} 
+dpkg -i ${repo_deb_path}
+apt-get update
 
 # Install Puppet Server
 echo "Installing Puppet..."
 
-apt-get install -y puppetserver >/dev/null
+apt-get install -y puppetserver
 
 echo "Puppet installed!"

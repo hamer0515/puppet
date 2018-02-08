@@ -1,5 +1,13 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
-  config.vm.hostname = "tropic_thunder"
+  config.vm.box_check_update = false
+  config.vm.network "public_network", bridge: ["enp0s31f6", "en0: Wi-Fi (AirPort)"]
+  
   config.vm.provision "shell", path: "installation.sh"
+
+  # Enable the Puppet provisioner
+  # master_config.vm.provision :puppet do |puppet|
+  #   puppet.manifests_path = "VagrantConf/manifests"
+  #   puppet.manifest_file  = "default.pp"
+  # end 
 end
